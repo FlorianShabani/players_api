@@ -24,7 +24,7 @@ type Config struct {
 
 func loadConfig() {
 	//Get username and password of database connection from config file
-	content, err := ioutil.ReadFile("./database/config.json")
+	content, err := ioutil.ReadFile("./config.json")
 	if err != nil {
 		log.Fatal("Error reading config.json")
 	}
