@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"log"
+	"microservice/database"
 	"microservice/models"
 	"microservice/services"
 	"net/http"
@@ -76,8 +77,6 @@ func UpdatePlayer(c echo.Context) error {
 
 	player := &models.Player{}
 
-	var err error
-
 	num, err := strconv.ParseUint(id, 10, 64)
 
 	if err != nil {
@@ -114,6 +113,27 @@ func UpdatePlayer(c echo.Context) error {
 
 func DeletePlayer(c echo.Context) error {
 	id := c.Param("id")
+
+	num, err := strconv.ParseUint(id, 10, 64)
+
+	if err != nil {
+		log.Printf("Error parsing player id %v", err.Error())
+		return c.JSON(500, fmt.Errorf(err.Error()))
+	}
+	//ID in uint type
+	ID := uint(num)
+
+	exists, err := database.Exists(models.PlayerTable, &ID)
+
+	if err != nil {
+		log.Printf("Error checking player %v", err.Error())
+		return c.JSON(500, fmt.Errorf(err.Error()))
+	}
+
+	if !exists {
+		log.Printf("Player of id %v doesnt exist", ID)
+		return c.JSON(404, fmt.Errorf("player of id %v doesnt exists", ID))
+	}
 
 	if err := services.DeletePlayer(id); err != nil {
 		log.Printf("Error deleting player %v", err)
