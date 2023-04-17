@@ -139,5 +139,5 @@ func DeletePlayer(c echo.Context) error {
 		log.Printf("Error deleting player %v", err)
 		return c.JSON(209, fmt.Errorf(err.Error()))
 	}
-	return nil
+	return c.JSON(http.StatusOK, nil)
 }

@@ -21,10 +21,10 @@ func main() {
 
 func startEchoServer() {
 	e := echo.New()
-	e.GET("/api/players", controllers.GetPlayers)         // done
-	e.GET("/api/players/:id", controllers.GetPlayerById)  // done
-	e.POST("/api/players", controllers.AddPlayer)         // done
-	e.PATCH("/api/players/:id", controllers.UpdatePlayer) // done
-	e.DELETE("/api/players/:id", controllers.DeletePlayer)
+	e.GET("/api/players", controllers.GetPlayers)          // done
+	e.GET("/api/players/:id", controllers.GetPlayerById)   // done
+	e.POST("/api/players", controllers.AddPlayer)          // done
+	e.PATCH("/api/players/:id", controllers.UpdatePlayer)  // done
+	e.DELETE("/api/players/:id", controllers.DeletePlayer) // done
 	e.Logger.Fatal(e.Start(":8080"))
 }
