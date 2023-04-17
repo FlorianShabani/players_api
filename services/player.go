@@ -74,7 +74,7 @@ func GetPlayers() (*[]models.Player, error) {
 
 		players = append(players, player)
 	}
-	if err := rows.Err(); err != nil { //Qa po bon qekjo?
+	if err := rows.Err(); err != nil {
 		log.Printf("func_QueryDatabase: Error in rows.Err %s", err)
 		return nil, errors.New("QueryDatabase: Error when scanning")
 	}
