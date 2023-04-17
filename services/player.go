@@ -24,8 +24,6 @@ func GetPlayerById(id string) (*models.Player, error) {
 		return nil, errors.New("could not find player")
 	}
 
-	log.Printf("akshjfdljkashdf %s", row)
-
 	err = row.Scan(&player.ID, &player.Name, &player.Age, &player.Team)
 
 	if err != nil {

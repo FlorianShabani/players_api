@@ -96,17 +96,7 @@ func QueryOneById(table string, id *int) (*sql.Row, error) {
 
 	defer db.Close()
 
-	//row := db.QueryRow("SELECT * FROM " + table + " WHERE " + *identifier)
 	row := db.QueryRow("SELECT * FROM "+table+" WHERE id = ?", *id)
-	if err := row.Scan(); err != nil {
-		if err == sql.ErrNoRows {
-			log.Printf("no player found with id %v", *id)
-			return nil, errors.New("Query: No row with ID")
-		} else {
-			log.Printf("func_QueryOne: Error when querying database %s", err)
-			return nil, errors.New("Query: Error when querying")
-		}
-	}
 
 	return row, nil
 }
