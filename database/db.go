@@ -197,8 +197,6 @@ func UpdatePlayer(p *models.Player) error {
 }
 
 func DeleteRecordById(table string, id string) error {
-	//DELETE FROM player WHERE id = 123;
-
 	db, err := OpenDatabase()
 	if err != nil {
 		log.Printf("DeletePlayer: Error when opening database %s", err)

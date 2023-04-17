@@ -108,6 +108,13 @@ func UpdatePlayer(c echo.Context) error {
 		return c.JSON(500, fmt.Errorf(err.Error()))
 	}
 
+	player, err = services.GetPlayerById(id)
+
+	if err != nil {
+		log.Printf("Error getting player %v", err.Error())
+		return c.JSON(500, fmt.Errorf(err.Error()))
+	}
+
 	return c.JSON(http.StatusOK, player)
 }
 
