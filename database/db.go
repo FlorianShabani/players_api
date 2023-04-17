@@ -45,7 +45,7 @@ func InitDatabase() error {
 	}
 	defer db.Close()
 
-	createPlayersTable := "CREATE TABLE IF NOT EXISTS " + models.PlayerTable + "(     id INT PRIMARY KEY,     name VARCHAR(255) NOT NULL,     age INT NOT NULL,     team VARCHAR(255) NOT NULL );"
+	createPlayersTable := "CREATE TABLE IF NOT EXISTS " + models.PlayerTable + "(     id INT AUTO_INCREMENT PRIMARY KEY,     name VARCHAR(255) NOT NULL,     age INT NOT NULL,     team VARCHAR(255) NOT NULL );"
 	_, err = db.Exec(createPlayersTable)
 
 	if err != nil {
@@ -111,22 +111,32 @@ func QueryOneById(table string, id *int) (*sql.Row, error) {
 	return row, nil
 }
 
-func CreatePlayer(p *models.Player) error {
+func CreatePlayer(p *models.Player) (*models.Player, error) {
 	db, err := OpenDatabase()
 	if err != nil {
 		log.Printf("func_CreatePlayer: Error when opening database %s", err)
-		return errors.New("error when opening database")
+		return nil, errors.New("error when opening database")
 	}
 
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO "+models.PlayerTable+" (id, name, age, team) VALUES (?, ?,?,?)", p.ID, p.Name, p.Age, p.Team)
+	res, err := db.Exec("INSERT INTO "+models.PlayerTable+" (id, name, age, team) VALUES (?, ?,?,?)", p.ID, p.Name, p.Age, p.Team)
+
 	if err != nil {
 		log.Printf("func_CreatePlayer: Error when creating player %s", err)
-		return errors.New("error when creating player")
+		return nil, errors.New("error when creating player")
 	}
 
-	return nil
+	id, err := res.LastInsertId()
+
+	p.ID = uint(id)
+
+	if err != nil {
+		log.Printf("DB Create Player: Error when giving id")
+		return p, err
+	}
+
+	return p, nil
 }
 
 func Exists(table string, id *uint) (bool, error) {

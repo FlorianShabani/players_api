@@ -64,7 +64,7 @@ func AddPlayer(c echo.Context) error {
 		return c.JSON(409, fmt.Errorf("player of id %v already exists", player.ID))
 	}
 
-	if err := services.AddPlayer(player); err != nil {
+	if _, err := services.AddPlayer(player); err != nil {
 		log.Printf("Error adding player %v", err.Error())
 		return c.JSON(500, fmt.Errorf(err.Error()))
 	}

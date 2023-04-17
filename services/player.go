@@ -97,13 +97,13 @@ func UnmarshalPlayers(players *[]models.Player) (*[]map[string]interface{}, erro
 	return &result, nil
 }
 
-func AddPlayer(p *models.Player) error {
-	err := database.CreatePlayer(p)
+func AddPlayer(p *models.Player) (*models.Player, error) {
+	p, err := database.CreatePlayer(p)
 	if err != nil {
 		log.Printf("func services.AddPlayer: error adding player to database %s", err)
-		return err
+		return nil, err
 	}
-	return nil
+	return p, nil
 }
 
 func ExistsPlayer(p *models.Player) (bool, error) {
