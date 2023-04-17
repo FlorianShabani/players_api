@@ -98,6 +98,11 @@ func QueryOneById(table string, id *int) (*sql.Row, error) {
 
 	row := db.QueryRow("SELECT * FROM "+table+" WHERE id = ?", *id)
 
+	if err := row.Err(); err != nil {
+		log.Printf("func_QueryDatabase: Error in rows.Err %s", err)
+		return nil, errors.New("QueryDatabase: Error when scanning")
+	}
+
 	return row, nil
 }
 
