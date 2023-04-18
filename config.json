@@ -1,0 +1,6 @@
+{
+    "mysql" : {
+        "usernames" : "root",
+        "password" : "admin"
+    }
+}
