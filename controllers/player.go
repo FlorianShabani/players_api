@@ -123,6 +123,8 @@ func DeletePlayer(c echo.Context) error {
 
 	num, err := strconv.ParseUint(id, 10, 64)
 
+	log.Println("Deleting player from database")
+
 	if err != nil {
 		log.Printf("Error parsing player id %v", err.Error())
 		return c.JSON(500, fmt.Errorf(err.Error()))

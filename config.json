@@ -1,6 +1,6 @@
 {
     "mysql" : {
-        "usernames" : "root",
+        "username" : "florian",
         "password" : "admin"
     }
 }
