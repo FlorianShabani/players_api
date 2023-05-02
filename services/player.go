@@ -119,7 +119,6 @@ func UpdatePlayer(p *models.Player) error {
 
 func DeletePlayer(id string) error {
 	err := database.DeleteRecordById(models.PlayerTable, id)
-	log.Println("Deleting player from database")
 	if err != nil {
 		log.Printf("func services.DeletePlayer: error deleting player in database %s", err)
 		return err
